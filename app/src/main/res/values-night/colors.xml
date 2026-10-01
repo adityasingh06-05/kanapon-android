@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Ink-stone, the default dark palette. -->
+    <color name="paper">#191612</color>
+    <color name="ink">#EEE8DA</color>
+    <color name="vermilion">#B0463A</color>
+</resources>
