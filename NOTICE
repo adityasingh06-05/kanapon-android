@@ -1,0 +1,23 @@
+Kanapon for Android includes work by others, under their own licences.
+Full texts ship in app/src/main/assets/licenses/ and are shown in the app
+under Settings > Credits.
+
+KanjiVG
+  Copyright (C) 2009/2010/2011 Ulrich Apel, https://kanjivg.tagaini.net
+  Creative Commons Attribution-Share Alike 3.0
+  Used in: app/src/main/assets/data/strokes.json (stroke order) and
+  app/src/main/assets/data/klee-strokes.json (the scoring reference, which
+  takes its strokes from KanjiVG and its shapes from Klee One). Share Alike
+  applies to that data and anything derived from it; it does not extend to
+  the code that reads them.
+
+Klee One, Zen Kaku Gothic New
+  Copyright Fontworks Inc. and the respective font authors
+  SIL Open Font License 1.1
+  Used in: app/src/main/res/font/*.ttf (subsets), the launcher icon, and the
+  glyph outlines in app/src/main/assets/glyphs/.
+
+perfect-freehand 1.2.3
+  Copyright (c) 2021 Stephen Ruiz Ltd
+  MIT License
+  Ported in: app/src/main/java/app/kanapon/engine/Freehand.kt
