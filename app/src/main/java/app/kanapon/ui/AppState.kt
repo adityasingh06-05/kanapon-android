@@ -161,6 +161,12 @@ class AppState(
         return prevBest
     }
 
+    /** Settles anything outstanding and writes it now, on this thread, for when no coroutine will run again. */
+    fun flushNow() {
+        practice.finaliseAll()
+        if (!statsStore.save(stats)) storageBroken = true
+    }
+
     fun bestOf(char: String): Int = stats.chars[char]?.best ?: 0
 
     private fun persist(next: Stats) {

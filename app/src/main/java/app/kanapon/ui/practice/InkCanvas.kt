@@ -57,14 +57,15 @@ private fun outlinePath(stroke: InkStroke, cellDp: Float, width: Double, pressur
  * pipeline as the web app's, in dp, the counterpart of its CSS pixels.
  */
 @Composable
-fun InkCanvas(practice: PracticeState, id: Int, pen: Float, pressure: Boolean, modifier: Modifier = Modifier) {
+fun InkCanvas(practice: PracticeState, id: Int, pen: Float, pressure: Boolean, modifier: Modifier = Modifier, active: Boolean = true) {
     val ink = practice.cells[id]
     val color = LocalPalette.current.ink
     val cache = remember { PathCache() }
     Canvas(
         modifier
             .semantics { contentDescription = "Writing area" }
-            .pointerInput(practice, id) {
+            .pointerInput(practice, id, active) {
+                if (!active) return@pointerInput
                 awaitEachGesture {
                     val down = awaitFirstDown(requireUnconsumed = false)
                     val stylus = down.type == PointerType.Stylus || down.type == PointerType.Eraser

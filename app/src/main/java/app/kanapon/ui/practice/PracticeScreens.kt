@@ -124,7 +124,8 @@ fun PhonePractice(app: AppState) {
                     .offset { IntOffset((x * density).roundToInt(), 0) },
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                CellSpec.entries.indices.forEach { i -> WritingCell(app, i, Modifier.width(cellW)) }
+                // Only the cell in view takes ink; the edge of the next one shows but does not draw.
+                CellSpec.entries.indices.forEach { i -> WritingCell(app, i, Modifier.width(cellW), active = i == practice.cell) }
             }
         }
 

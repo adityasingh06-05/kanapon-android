@@ -13,6 +13,8 @@ import android.provider.MediaStore
 import androidx.compose.ui.graphics.asAndroidPath
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.withTranslation
 import app.kanapon.R
 import app.kanapon.data.KLEE_BASELINE
 import app.kanapon.data.KLEE_SIZE
@@ -197,7 +199,7 @@ class AndroidExporter(private val context: Context) : Exporter {
          * rasterises it. Sheet, dotted crosshair, rule border, then the Klee One outline.
          */
         fun renderGlyph(svg: String, px: Int): Bitmap {
-            val bmp = Bitmap.createBitmap(px, px, Bitmap.Config.ARGB_8888)
+            val bmp = createBitmap(px, px)
             val c = Canvas(bmp)
             c.drawColor(SHEET)
             c.scale(px / 1000f, px / 1000f)
@@ -218,11 +220,10 @@ class AndroidExporter(private val context: Context) : Exporter {
             val m = GLYPH.find(svg) ?: throw IOException("No outline in the glyph file")
             val (d, _, tx, ty, sx, sy) = m.destructured
             val path = PathParser().parsePathString(d).toPath().asAndroidPath()
-            c.save()
-            c.translate(tx.toFloat(), ty.toFloat())
-            c.scale(sx.toFloat(), sy.toFloat())
-            c.drawPath(path, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = INK })
-            c.restore()
+            c.withTranslation(tx.toFloat(), ty.toFloat()) {
+                scale(sx.toFloat(), sy.toFloat())
+                drawPath(path, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = INK })
+            }
             return bmp
         }
     }

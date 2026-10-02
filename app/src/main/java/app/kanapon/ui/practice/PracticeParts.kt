@@ -37,6 +37,7 @@ import app.kanapon.ui.components.UnderlineButton
 import app.kanapon.ui.components.UnderlinedTxt
 import app.kanapon.ui.theme.LocalPalette
 import app.kanapon.ui.theme.UiFont
+import java.util.Locale
 
 /** "3 strokes · hiragana", with " · character hidden" in recall mode. */
 fun kanaSub(practice: PracticeState): String {
@@ -58,14 +59,14 @@ fun HeadGlyph(practice: PracticeState, size: Dp) {
 
 /** One writing cell: ruling, the fading model, and the ink surface. */
 @Composable
-fun WritingCell(app: AppState, id: Int, modifier: Modifier) {
+fun WritingCell(app: AppState, id: Int, modifier: Modifier, active: Boolean = true) {
     val practice = app.practice
     val p = LocalPalette.current
     val spec = CellSpec.entries[id]
     val g = practice.guideFor(spec)
     RuledCell(modifier.aspectRatio(1f), quarters = app.settings.quarters) {
         if (g > 0f) KanaGlyph(practice.kana.char, Modifier.fillMaxSize(), color = p.guide(g))
-        InkCanvas(practice, id, app.settings.pen, app.settings.pressure, Modifier.fillMaxSize())
+        InkCanvas(practice, id, app.settings.pen, app.settings.pressure, Modifier.fillMaxSize(), active)
     }
 }
 
@@ -100,7 +101,7 @@ fun PressureReadout(practice: PracticeState, modifier: Modifier = Modifier) {
     val p = LocalPalette.current
     Row(modifier) {
         Txt("pressure ", 11.5f, color = p.inkMuted, tabular = true, lineHeight = 1.2f)
-        Txt("%.2f".format(practice.pressure.floatValue), 11.5f, tabular = true, lineHeight = 1.2f)
+        Txt("%.2f".format(Locale.ROOT, practice.pressure.floatValue), 11.5f, tabular = true, lineHeight = 1.2f)
     }
 }
 

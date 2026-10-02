@@ -22,7 +22,8 @@ class KanaponViewModel(application: Application) : AndroidViewModel(application)
         )
     }
 
+    /** viewModelScope is already cancelled here, so the last attempt is written synchronously. */
     override fun onCleared() {
-        app.practice.finaliseAll()
+        app.flushNow()
     }
 }
